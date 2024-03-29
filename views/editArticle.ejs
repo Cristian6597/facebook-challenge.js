@@ -1,0 +1,15 @@
+<%- include("./components/header") %>
+<form method ="POST" action=/edit-article/ <%= result._id %>>
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Name</label>
+        <input type="text" name="title" value=<%= result.title %> <class="form-control" id="exampleFormControlInput1" placeholder="name">
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1"value=<%= result.article %> class="form-control">Text</label>
+        <textarea class="form-control" name ="article" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+<%- include("./components/footer") %>
+
+

@@ -1,0 +1,18 @@
+
+<%- include("./components/header") %>
+<% if (result.length > 0) { %>
+    <% result.forEach(element => { %>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title"><a href="/article/<%= element._id %>"><%= element.title %></a></h5>
+                <p class="card-text"><%= element.article %></p>
+                <a href="#" class="card-link">See More</a>
+            </div>
+        </div>
+    <% }); %>
+<% } else { %>
+    <p>There are no records</p>
+<% } %>
+hello world
+<%- include("./components/footer") %>
+

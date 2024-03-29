@@ -1,0 +1,23 @@
+<%- include("./components/header") %>
+<form method ="POST" action="/add-article">
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" id="id-name"class="form-label">Name</label>
+        <input type="text" name="title" class="form-control" id="exampleFormControlInput1" placeholder="name">
+        <% if (err && err.title ) {%>
+        <small id="err" class="form-text text-muted">
+         <%= err['title'].message %></small>
+        <% } %>
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-control">Text</label>
+        <% if (err && err.article ) {%>
+            <small id="err" class="form-text text-muted">
+             <%= err['article'].message %></small>
+            <% } %>
+        <textarea class="form-control" name ="article" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+<%- include("./components/footer") %>
+
+
