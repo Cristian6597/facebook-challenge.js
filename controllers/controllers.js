@@ -11,7 +11,7 @@ const getHomepage = (req, res) => {
 
 const postNewArticle = (req, res) => {
   if (req.method === "GET") {
-    res.render("addArticle", {err:false});
+    res.render("addArticle", { err: false });
   }
 
   if (req.method === "POST") {
@@ -19,9 +19,10 @@ const postNewArticle = (req, res) => {
     article
       .save()
       .then(() => res.redirect("/"))
-      .catch(err => {
-        console.log(err)
-       res.render('addArticle', { err :err.errors})});
+      .catch((err) => {
+        console.log(err);
+        res.render("addArticle", { err: err.errors });
+      });
     // add new post
   }
 };
@@ -35,31 +36,52 @@ const showOneArticle = (req, res) => {
     .catch((err) => console.log(err));
 };
 
-
 const updateOneArticle = (req, res) => {
-    if (req.method === "GET") {
-        Article.findById(req.params.id)
-        .then((result) => {
-          console.log(result);
-          res.render("editArticle", { result });
-        })
-        .catch((err) => console.log(err));
-    }
-    if (req.method === "POST") {
-        Article.findByIdAndUpdate(req.params.id, {
-            title: req.body.title,
-            article: req.body.article
-        })
-        .then(() => res.redirect('/'))
-        .catch(err => console.log(err));
-    }
+  if (req.method === "GET") {
+    Article.findById(req.params.id)
+      .then((result) => {
+        console.log(result);
+        res.render("editArticle", { result });
+      })
+      .catch((err) => console.log(err));
+  }
+  if (req.method === "POST") {
+    Article.findByIdAndUpdate(req.params.id)
+      .then((result) => {
+        result.title = req.body.title;
+        result.article = req.body.article;
+        result
+          .save()
+          .then(() => res.redirect("/"))
+          .catch((err) => {
+        console.log(err);
+        res.render("addArticle", { err: err.errors });
+      });
+      })
+      .catch((err) => console.log(err));
+  }
 };
 
-
 const deleteOneArticle = (req, res) => {
-    Article.findByIdAndDelete(req.params.id)
-        .then(result => res.redirect('/'))
-        .catch(err => console.log(err));
+  const articleId = req.params.id;
+
+  Article.findByIdAndDelete(articleId)
+    .then((result) => {
+      if (!result) {
+        console.log("Articolo non trovato");
+        return res.status(404).send("Articolo non trovato");
+      }
+      console.log("Articolo cancellato con successo");
+      res.redirect("/");
+    })
+    .catch((err) => {
+      console.log("Errore durante la cancellazione dell'articolo:", err);
+      res
+        .status(500)
+        .send(
+          "Si è verificato un errore durante la cancellazione dell'articolo"
+        );
+    });
 };
 
 module.exports = {
@@ -67,5 +89,5 @@ module.exports = {
   postNewArticle,
   showOneArticle,
   updateOneArticle,
-  deleteOneArticle
+  deleteOneArticle,
 };

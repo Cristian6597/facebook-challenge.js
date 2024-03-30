@@ -8,6 +8,6 @@ router.get('/article/:id', controller.showOneArticle)
 
 router.all('/edit-article/:id', controller.updateOneArticle)
 
-router.get('/delete-article/:id', controller.deleteOneArticle)
+router.get('/delete-article/:id', controller.deleteOneArticle);
 
 module.exports = router
